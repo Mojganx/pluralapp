@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import * as courseActions from '../../actions/courseActions';
 
 class CoursesPage extends React.Component {
   constructor(props, context) {
@@ -19,15 +21,19 @@ class CoursesPage extends React.Component {
     this.setState({course: course}); // update the state by calling setState
   } // this will update our state everytime someone makes changes to the title inputfield
 
-
   onClickSave() {
-    alert(`Saving ${this.state.course.title}`); // an alert that is sent out that the title is saved
+    this.props.dispatch(courseActions.createCourse(this.state.course));
+  }
+
+  courseRow(course, index) {
+    return <div key={index}>{course.title}</div>;
   }
 
   render() {
     return (
       <div>
         <h1>Courses</h1>
+        {this.props.courses.map(this.courseRow)}
         <h2>Add Courses</h2>
         <input
           type="text"
@@ -43,4 +49,18 @@ class CoursesPage extends React.Component {
   }
 }
 
-export default CoursesPage;
+CoursesPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, ownProps){
+  return {
+    courses: state.courses //this courses refers to the courses in courseReducer/rootReducer
+  };
+}
+//ownProps --> lets us access props that are attached to this component. it is a reference to the components own props.
+
+export default connect (mapStateToProps)(CoursesPage);
+// taking the result of one function and passing it on to the next function
+// dispatch is a function that allows you to fire off your actions

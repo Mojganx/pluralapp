@@ -10,11 +10,14 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore(); //created an instance of our store
 
+const Root = ({store}) => (
 render (
-  <Provider store={store} >
+  <Provider store={store}>
     <Router history={browserHistory} routes={routes} />,
   </Provider>,
   document.getElementById('app')
-);
+));
+
+
 //provider is a higher order component that attaches our store to our react container components
 // provider wraps our router components (ur enitre application) so it can be connected to our redux store
