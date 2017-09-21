@@ -41,9 +41,9 @@ class CoursesPage extends React.Component {
           value={this.state.course.title} />
 
         <input
-        type="submit"
-        value="Save"
-        onClick={this.onClickSave} />
+          type="submit"
+          value="Save"
+          onClick={this.onClickSave} />
       </div>
     );
   }
